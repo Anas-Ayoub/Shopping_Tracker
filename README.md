@@ -1,17 +1,20 @@
-# shopping_list
+# Expense Tracker App
 
-A new Flutter project.
+**Description:**
 
-## Getting Started
+Welcome to the Expense Tracker App – your financial companion for keeping tabs on your expenses effortlessly. This app empowers you to monitor your spending habits and visualize your financial data with intuitive charts. Track expenses in various categories and gain insights into your financial patterns.
 
-This project is a starting point for a Flutter application.
+**Features:**
 
-A few resources to get you started if this is your first Flutter project:
+- **Expense Tracking:** Log your daily expenses with ease, categorizing each transaction.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- **Category-wise Spending:** Gain insights into your spending habits with a detailed breakdown of expenses by category.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-"# Shopping_Tracker" 
+- **Chart Visualization:** View a graphical representation of your expenditures through interactive charts.
+
+- **Expense History:** Access a comprehensive history of your past expenses, helping you analyze and plan your budget.
+
+**Screenshot:**
+![Demo Screenshot 1](Demo/demo.png)
+
+
