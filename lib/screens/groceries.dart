@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:shopping_list/config.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shopping_list/data/categories.dart';
@@ -27,7 +27,7 @@ class _GroceriesScreenState extends State<GroceriesScreen> {
     super.initState();
     _loadItems();
 
-        // Set up connectivity change listener
+    // Set up connectivity change listener
     // _connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
     //   if (result != ConnectivityResult.none) {
     //     print("SAASASA");
@@ -57,23 +57,34 @@ class _GroceriesScreenState extends State<GroceriesScreen> {
     print("in Load");
     var url = Uri.https(
         'flutter-prep-6e6e0-default-rtdb.firebaseio.com', 'shopping-list.json');
-
+    print("on");
     try {
+      print("1");
+
       var data = await http.get(url);
       if (data.statusCode >= 400) {
+        print(data);
+
         setState(() {
           _error = "Can't fetch the data :(\n please try again later.";
         });
       }
+      print("2");
 
       if (data.body == 'null') {
+        print("null");
+
         setState(() {
           _isLoading = false;
           return;
         });
       }
+      print("3");
+
       final Map<String, dynamic> items = json.decode(data.body);
       final List<GroceryItem> tmpItems = [];
+      print("4");
+
       for (final item in items.entries) {
         final category = categories.entries
             .firstWhere(
@@ -87,15 +98,17 @@ class _GroceriesScreenState extends State<GroceriesScreen> {
               category: category),
         );
       }
+      print("5");
 
       setState(() {
         _groceryItem = tmpItems;
         _isLoading = false;
       });
+      print("1dd");
     } catch (err) {
       setState(() {
-        //_isLoading = false;
-        _error = "Something went wrong :(";
+        print("MESSAGE " + err.toString());
+        _error = 'Something went wrong :(';
       });
     }
   }
@@ -185,9 +198,8 @@ class _GroceriesScreenState extends State<GroceriesScreen> {
                   _groceryItem.remove(item);
                 });
 
-                var url = Uri.https(
-                    'flutter-prep-6e6e0-default-rtdb.firebaseio.com',
-                    'shopping-list/${item.id}.json');
+                var url =
+                    Uri.https(firebaseUrl, 'shopping-list/${item.id}.json');
 
                 var response = await http.delete(url);
                 print(response.statusCode);
@@ -200,24 +212,35 @@ class _GroceriesScreenState extends State<GroceriesScreen> {
                 }
               },
               key: ValueKey(item.id),
-              child: Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    color: item.category.color,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text(item.name),
-                  const Spacer(),
-                  Text(item.quantity.toString()),
-                  const SizedBox(
-                    width: 20,
-                  )
-                ],
+              child: Card(
+                color: const Color.fromARGB(88, 68, 137, 255),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      decoration: BoxDecoration(
+                          color: item.category.color,
+                          borderRadius: BorderRadius.circular(25)),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      item.name,
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(item.quantity.toString()),
+                    const SizedBox(
+                      width: 20,
+                    )
+                  ],
+                ),
               ),
             ),
         ],
@@ -244,7 +267,10 @@ class _GroceriesScreenState extends State<GroceriesScreen> {
           ),
         ],
       ),
-      body: content,
+      body: Padding(
+        padding: EdgeInsets.all(8),
+        child: content,
+      ),
     );
   }
 }
